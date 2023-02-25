@@ -5,11 +5,14 @@ import {
 } from "@solana/wallet-adapter-react";
 import { WalletModalProvider } from "@solana/wallet-adapter-react-ui";
 import { PhantomWalletAdapter } from "@solana/wallet-adapter-wallets";
-import { clusterApiUrl } from "@solana/web3.js";
+import { Cluster, clusterApiUrl } from "@solana/web3.js";
 require("@solana/wallet-adapter-react-ui/styles.css");
 
 const WalletContextProvider: FC<{ children: ReactNode }> = ({ children }) => {
-  const url = useMemo(() => clusterApiUrl("devnet"), []);
+  const url = useMemo(
+    () => clusterApiUrl((process.env.NET_WORK || "devnet") as Cluster),
+    []
+  );
   const wallets = [new PhantomWalletAdapter()];
 
   return (
